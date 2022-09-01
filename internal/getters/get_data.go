@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"last_lesson/internal/alpha2"
+	"last_lesson/internal/config"
 	"last_lesson/internal/mytypes"
 	"last_lesson/internal/sub"
 	"last_lesson/internal/vars"
@@ -62,7 +63,14 @@ func MMS() ([]mytypes.MMSData, error) {
 }
 
 func SMS() ([]mytypes.SMSData, error) {
-	smsData, err := sub.ReadCSVFromFile(vars.SmsDataFile, ";", 4)
+	config, err := config.Enviroment()
+	if err != nil {
+		return []mytypes.SMSData{}, err
+	}
+
+	SmsDataFile := config.DataFolder + config.SmsFile
+
+	smsData, err := sub.ReadCSVFromFile(SmsDataFile, ";", 4)
 	if err != nil {
 		return []mytypes.SMSData{}, err
 	}
@@ -99,7 +107,14 @@ func SMS() ([]mytypes.SMSData, error) {
 }
 
 func VoiceCall() ([]mytypes.VoiceCallData, error) {
-	voiceData, err := sub.ReadCSVFromFile(vars.VoiceDataFile, ";", 8)
+	config, err := config.Enviroment()
+	if err != nil {
+		return []mytypes.VoiceCallData{}, err
+	}
+
+	VoiceDataFile := config.DataFolder + config.VoiceFile
+
+	voiceData, err := sub.ReadCSVFromFile(VoiceDataFile, ";", 8)
 	if err != nil {
 		return []mytypes.VoiceCallData{}, err
 	}
@@ -141,7 +156,14 @@ func VoiceCall() ([]mytypes.VoiceCallData, error) {
 }
 
 func Email() ([]mytypes.EmailData, error) {
-	emailData, err := sub.ReadCSVFromFile(vars.EmailDataFile, ";", 3)
+	config, err := config.Enviroment()
+	if err != nil {
+		return []mytypes.EmailData{}, err
+	}
+
+	EmailDataFile := config.DataFolder + config.EmailFile
+
+	emailData, err := sub.ReadCSVFromFile(EmailDataFile, ";", 3)
 	if err != nil {
 		return []mytypes.EmailData{}, err
 	}
@@ -172,7 +194,14 @@ func Email() ([]mytypes.EmailData, error) {
 }
 
 func Billing() (mytypes.BillingData, error) {
-	billingData, err := sub.ReadFromFile(vars.BillingDataFile)
+	config, err := config.Enviroment()
+	if err != nil {
+		return mytypes.BillingData{}, err
+	}
+
+	BillingDataFile := config.DataFolder + config.BillingFile
+
+	billingData, err := sub.ReadFromFile(BillingDataFile)
 	if err != nil {
 		return mytypes.BillingData{}, err
 	}

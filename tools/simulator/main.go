@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"last_lesson/internal/config"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -34,13 +36,22 @@ const maxBandwidth = 100
 const minEmailDeliveryTime = 0
 const maxEmailDeliveryTime = 600
 
-const smsFilename = "sms.data"
+var (
+	smsFilename           string
+	voiceFilename         string
+	emailFilename         string
+	billingFilename       string
+	accendentListFilename string
+)
+
+// const smsFilename = "sms.data"
+// const voiceFilename = "voice.data"
+// const emailFilename = "email.data"
+// const billingFilename = "billing.data"
+// const accendentListFilename = "accendents.data"
+
 const mmsApiUrl = "http://localhost:8282/mms" // to params
-const voiceFilename = "voice.data"
-const emailFilename = "email.data"
-const billingFilename = "billing.data"
 const supportApiUrl = "http://localhost:8282/support"
-const accendentListFilename = "accendents.data"
 
 var firstSMSRowForCorrupt int
 var secondSMSRowForCorrupt int
@@ -108,6 +119,17 @@ func init() {
 }
 
 func main() {
+	config, err := config.Enviroment()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	smsFilename = config.DataFolder + config.SmsFile
+	voiceFilename = config.DataFolder + config.VoiceFile
+	emailFilename = config.DataFolder + config.EmailFile
+	billingFilename = config.DataFolder + config.BillingFile
+	accendentListFilename = config.DataFolder + config.AccendentsFile
+
 	shuffleSmsData()
 
 	MMSCollection = shuffleMMSData()

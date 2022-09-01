@@ -2,3 +2,5 @@ billing.data
 email.data
 sms.data
 voice.data
+.DS_Store
+.env

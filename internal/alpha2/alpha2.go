@@ -3,9 +3,9 @@ package alpha2
 import (
 	"encoding/json"
 	"io/ioutil"
+	"last_lesson/internal/config"
 	"last_lesson/internal/mytypes"
 	"last_lesson/internal/sub"
-	"last_lesson/internal/vars"
 	"log"
 	"net/http"
 	"strings"
@@ -32,18 +32,25 @@ func GetAlpha2Codes(sync bool) ([]string, error) {
 }
 
 func GetAlpha2(sync bool) (mytypes.Alpha2Codes, error) {
-	ok, err := sub.FileExists(vars.Alpha2CodesFile)
+	config, err := config.Enviroment()
+	if err != nil {
+		return mytypes.Alpha2Codes{}, err
+	}
+
+	Alpha2CodesFile := config.DataFolder + config.Alpha2File
+
+	ok, err := sub.FileExists(Alpha2CodesFile)
 	if err != nil {
 		return mytypes.Alpha2Codes{}, err
 	}
 
 	if sync || !ok {
-		if err = Sync(); err != nil {
+		if err = Sync(Alpha2CodesFile); err != nil {
 			return mytypes.Alpha2Codes{}, err
 		}
 	}
 
-	byteData, err := ioutil.ReadFile(vars.Alpha2CodesFile)
+	byteData, err := ioutil.ReadFile(Alpha2CodesFile)
 	if err != nil {
 		return mytypes.Alpha2Codes{}, err
 	}
@@ -56,13 +63,13 @@ func GetAlpha2(sync bool) (mytypes.Alpha2Codes, error) {
 	return jsonData, nil
 }
 
-func Sync() error {
+func Sync(path string) error {
 	data, err := json.Marshal(parseWiki())
 	if err != nil {
 		return err
 	}
 
-	ioutil.WriteFile(vars.Alpha2CodesFile, data, 0644)
+	ioutil.WriteFile(path, data, 0644)
 
 	return nil
 }

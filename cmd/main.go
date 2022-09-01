@@ -7,9 +7,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// REPORT:
-// getRandomIntBetweenValues - не обрабатывает верхнюю границу (возвращал всегда status closed для accendent)
-
 func main() {
 	ListenAndServe()
 }
