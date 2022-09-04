@@ -124,11 +124,11 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	smsFilename = config.DataFolder + config.SmsFile
-	voiceFilename = config.DataFolder + config.VoiceFile
-	emailFilename = config.DataFolder + config.EmailFile
-	billingFilename = config.DataFolder + config.BillingFile
-	accendentListFilename = config.DataFolder + config.AccendentsFile
+	smsFilename = config.SmsFile
+	voiceFilename = config.VoiceFile
+	emailFilename = config.EmailFile
+	billingFilename = config.BillingFile
+	accendentListFilename = config.AccendentsFile
 
 	shuffleSmsData()
 

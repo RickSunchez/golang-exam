@@ -68,7 +68,7 @@ func SMS() ([]mytypes.SMSData, error) {
 		return []mytypes.SMSData{}, err
 	}
 
-	SmsDataFile := config.DataFolder + config.SmsFile
+	SmsDataFile := config.SmsFile
 
 	smsData, err := sub.ReadCSVFromFile(SmsDataFile, ";", 4)
 	if err != nil {
@@ -112,7 +112,7 @@ func VoiceCall() ([]mytypes.VoiceCallData, error) {
 		return []mytypes.VoiceCallData{}, err
 	}
 
-	VoiceDataFile := config.DataFolder + config.VoiceFile
+	VoiceDataFile := config.VoiceFile
 
 	voiceData, err := sub.ReadCSVFromFile(VoiceDataFile, ";", 8)
 	if err != nil {
@@ -161,7 +161,7 @@ func Email() ([]mytypes.EmailData, error) {
 		return []mytypes.EmailData{}, err
 	}
 
-	EmailDataFile := config.DataFolder + config.EmailFile
+	EmailDataFile := config.EmailFile
 
 	emailData, err := sub.ReadCSVFromFile(EmailDataFile, ";", 3)
 	if err != nil {
@@ -199,7 +199,7 @@ func Billing() (mytypes.BillingData, error) {
 		return mytypes.BillingData{}, err
 	}
 
-	BillingDataFile := config.DataFolder + config.BillingFile
+	BillingDataFile := config.BillingFile
 
 	billingData, err := sub.ReadFromFile(BillingDataFile)
 	if err != nil {

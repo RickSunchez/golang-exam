@@ -5,7 +5,6 @@ import (
 )
 
 type EnviromentT struct {
-	DataFolder     string
 	Alpha2File     string
 	BillingFile    string
 	EmailFile      string
@@ -22,14 +21,15 @@ func Enviroment() (EnviromentT, error) {
 		return EnviromentT{}, err
 	}
 
+	dataFolder := viper.GetString("DATA_FOLDER")
+
 	return EnviromentT{
-		DataFolder:     viper.GetString("DATA_FOLDER"),
-		Alpha2File:     viper.GetString("ALPHA2_CODES_FILE"),
-		BillingFile:    viper.GetString("BILLING_FILE"),
-		EmailFile:      viper.GetString("EMAIL_FILE"),
-		SmsFile:        viper.GetString("SMS_FILE"),
-		VoiceFile:      viper.GetString("VOICE_FILE"),
-		AccendentsFile: viper.GetString("ACCENDENTS_FILE"),
+		Alpha2File:     dataFolder + viper.GetString("ALPHA2_CODES_FILE"),
+		BillingFile:    dataFolder + viper.GetString("BILLING_FILE"),
+		EmailFile:      dataFolder + viper.GetString("EMAIL_FILE"),
+		SmsFile:        dataFolder + viper.GetString("SMS_FILE"),
+		VoiceFile:      dataFolder + viper.GetString("VOICE_FILE"),
+		AccendentsFile: dataFolder + viper.GetString("ACCENDENTS_FILE"),
 	}, nil
 
 }

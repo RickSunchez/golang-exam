@@ -37,7 +37,7 @@ func GetAlpha2(sync bool) (mytypes.Alpha2Codes, error) {
 		return mytypes.Alpha2Codes{}, err
 	}
 
-	Alpha2CodesFile := config.DataFolder + config.Alpha2File
+	Alpha2CodesFile := config.Alpha2File
 
 	ok, err := sub.FileExists(Alpha2CodesFile)
 	if err != nil {
