@@ -81,9 +81,14 @@ td.row-name {
     background-position: center center;
 }
 
+/* CHANGED */
 .charts {
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.charts table {
+    margin-bottom: 25px;
 }
 
 .charts canvas {

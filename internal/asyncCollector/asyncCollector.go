@@ -251,10 +251,10 @@ func vcStream(wg *sync.WaitGroup) chan mytypes.VCDataFlow {
 			return
 		}
 
-		var result [][]mytypes.VoiceCallData
-		result = append(result, voiceCallData)
+		// var result [][]mytypes.VoiceCallData
+		// result = append(result, voiceCallData)
 
-		data.Data = &result
+		data.Data = &voiceCallData
 
 		out <- data
 	}()

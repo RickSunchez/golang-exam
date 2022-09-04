@@ -359,7 +359,7 @@ func GetResultData() (mytypes.ResultSetT, error) {
 		return mytypes.ResultSetT{}, err
 	}
 
-	result.VoiceCall = append(result.VoiceCall, voiceCallData)
+	result.VoiceCall = voiceCallData
 
 	// Email
 	emailData, err := Email()

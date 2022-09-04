@@ -1,6 +1,6 @@
 (function(){
-    let apiPath = 'http://127.0.0.1:8383/test';
-    //let apiPath = 'response/error.json';
+    // let apiPath = 'http://127.0.0.1:8383/test';
+    let apiPath = 'http://127.0.0.1:8585';
 
     let dataScheme = {
         'voice_call' : [
@@ -132,48 +132,72 @@
         renderTableData(table, data, dataScheme.incident);
     };
 
+    // CHANGED
     let renderEmailCharts = function(data){
         let container = document.querySelector('.charts');
 
-        console.log(data);
+        for (let key in data) {
+            let table = document.createElement('table');
+            table.innerHTML = `
+                <tr>
+                    <th colspan="2">Country code: ${key}</th>
+                </tr>
+                <tr>
+                    <th>Top fastest</th>
+                    <th>Top slowest</th>
+                </tr>
+            `;
 
-        data.forEach((item) => {
-            let labels = [];
-            let values = [];
-            item.forEach((sector) => {
-                labels.push(sector.provider + " (" + sector.country + ")");
-                values.push(sector.delivery_time);
-            });
+            let tr = document.createElement('tr');
 
-            let canvas = document.createElement('canvas');
-            let ctx = canvas.getContext('2d');
-            let chart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    'labels': labels,
-                    'datasets': [
-                        {
-                            'label': 'Dataset 1',
-                            'data': values,
-                            'backgroundColor': pieColors
-                        }
-                    ]
-                },
-                options: {
-                    responsive: false,
-                    plugins: {
-                        legend: {
-                            position: 'top'
+            data[key].forEach((item) => {
+                let labels = [];
+                let values = [];
+                item.forEach((sector) => {
+                    labels.push(sector.provider + " (" + sector.country + ")");
+                    values.push(sector.delivery_time);
+                });
+
+                let canvas = document.createElement('canvas');
+                let ctx = canvas.getContext('2d');
+                let chart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        'labels': labels,
+                        'datasets': [
+                            {
+                                'label': 'Dataset 1',
+                                'data': values,
+                                'backgroundColor': pieColors
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: false,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
                         }
                     }
-                }
+                });
+
+                let td = document.createElement('td');
+                td.appendChild(canvas);
+                tr.appendChild(td);
             });
-            container.appendChild(canvas);
-        });
+
+            table.appendChild(tr);
+            container.appendChild(table);
+        }
+            
     };
 
     let handleResponse = async function(response){
         let json = await response.json();
+
+        console.log(json); //
+
         if(!checkJsonScheme(json)) {
             showErrors(['JSON bad format: no status, data or error keys']);
             return;

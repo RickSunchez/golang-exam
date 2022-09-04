@@ -8,10 +8,10 @@ import (
 // Data types
 
 type SMSData struct {
-	Country      string
-	Bandwidth    string
-	ResponseTime string
-	Provider     string
+	Country      string `json:"country"`
+	Bandwidth    string `json:"bandwidth"`
+	ResponseTime string `json:"response_time"`
+	Provider     string `json:"provider"`
 }
 
 type SMSDataFlow struct {
@@ -39,12 +39,12 @@ type VoiceCallData struct {
 	ConnectionStability float32 `json:"connection_stability"`
 	TTFB                int     `json:"ttfb"`
 	VoicePurity         int     `json:"voice_purity"`
-	MedianOfCallsTime   int     `json:"median"`
+	MedianOfCallsTime   int     `json:"median_of_call_time"`
 }
 
 type VCDataFlow struct {
 	Error error
-	Data  *[][]VoiceCallData
+	Data  *[]VoiceCallData
 }
 
 type EmailData struct {
@@ -103,7 +103,7 @@ type ResultT struct {
 type ResultSetT struct {
 	SMS       [][]SMSData              `json:"sms"`
 	MMS       [][]MMSData              `json:"mms"`
-	VoiceCall [][]VoiceCallData        `json:"voice_call"`
+	VoiceCall []VoiceCallData          `json:"voice_call"`
 	Email     map[string][][]EmailData `json:"email"`
 	Billing   BillingData              `json:"billing"`
 	Support   []int                    `json:"support"`
