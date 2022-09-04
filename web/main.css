@@ -86,6 +86,7 @@ td.row-name {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+    justify-content: center;
 }
 .charts table {
     margin-bottom: 25px;
